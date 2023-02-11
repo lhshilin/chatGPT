@@ -9,7 +9,7 @@ $(function () {
             }
             return num
         }
-        time = time.getHours() + ':' + zeroPadding(time.getMinutes()) + ':' + zeroPadding(time.getSeconds());
+        time = zeroPadding(time.getHours()) + ':' + zeroPadding(time.getMinutes()) + ':' + zeroPadding(time.getSeconds());
         return time
     }
     if(!localStorage.getItem('apikey')) {
@@ -27,10 +27,11 @@ $(function () {
     })
     // 得到回复信息
     function getData() {
-        var text = $('.text').val();
+        var text = $.trim($('.text').val());
         if(text === '') return;
-        $('.dialogBox').append('<p class="right"><span class="time">' + nowTime() + '</span><img src="./images/logo.png" alt="logo"></p><p class="rightContent"><span class="rightText">' + text +'</span></p><p class="left"><img src="./images/chatGPT.png" alt="chatGPT-log"><span class="time"></span></p><p class="leftContent"><span class="leftText">chatGPT正在思考中...</span></p>')
+        $('.dialogBox').append('<p class="right"><span class="time">' + nowTime() + '</span><img src="./images/logo.png" alt="logo"></p><p class="rightContent"><textarea class="rightText">' + text +'</textarea></p><p class="left"><img src="./images/chatGPT.png" alt="chatGPT-log"><span class="time"></span></p><p class="leftContent"><textarea class="leftText">chatGPT正在思考中...</textarea></p>')
         $('.text').val('')
+        $('.dialogBox .rightText:last').css('height', $('.dialogBox .rightText:last').prop('scrollHeight'))
         $('.dialogBox').scrollTop($('.dialogBox').prop('scrollHeight'))
         var Authorization = 'Bearer ' + localStorage.getItem('apikey'),
             data = JSON.stringify({
@@ -52,13 +53,13 @@ $(function () {
             },
             data : data,
             success : function (res) {
-                $('.dialogBox .leftContent:last-child .leftText').html(res.choices[0].text)
+                $('.dialogBox .leftText:last').html($.trim(res.choices[0].text)).css('height', $('.dialogBox .leftContent:last-child .leftText').prop('scrollHeight'))
                 $('.dialogBox .left:nth-last-child(2) .time').html(nowTime())
                 $('.dialogBox').scrollTop($('.dialogBox').prop('scrollHeight'))
             },
             error : function (err) {
                 err = JSON.parse(err.responseText)
-                $('.dialogBox .leftContent:last-child .leftText').html(err.error.message)
+                $('.dialogBox .leftText:last').html($.trim(err.error.message)).css('height', $('.dialogBox .leftContent:last-child .leftText').prop('scrollHeight'))
                 $('.dialogBox .left:nth-last-child(2) .time').html(nowTime())
                 $('.dialogBox').scrollTop($('.dialogBox').prop('scrollHeight'))
             }

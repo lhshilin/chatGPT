@@ -14,6 +14,8 @@ $(function () {
     }
     if(!localStorage.getItem('apikey')) {
         $('.apikey').show()
+        $('.cover').show()
+        $('body').css('overflow', 'hidden')
     }
     $('.apikeyBtn').on('click', function () {
         if($('.apikeyInput').val()) {

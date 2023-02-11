@@ -46,6 +46,10 @@
     margin-top: 10px;
 }
 
+.dialogBox .time {
+    margin: 0 5px;
+}
+
 .dialogBox .leftContent,
 .dialogBox .rightContent {
     margin: 0 10px;
@@ -129,4 +133,17 @@
 .apikey button {
     margin: 10px auto;
     float: right;
+}
+
+/* 遮掩层 */
+.cover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 10000px;
+    height: 10000px;
+    background-color: #999;
+    display: none;
+    opacity: .5;
+    z-index: 9999;
 }

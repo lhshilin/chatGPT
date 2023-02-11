@@ -1,5 +1,17 @@
 $(function () {
     $('.dialogBox').css('height', ($(window).height()) * 0.8)
+    $('.dialogBox .left:first-child .time').html(nowTime())
+    function nowTime() {
+        var time = new Date();
+        function zeroPadding(num) {
+            if(num < 10) {
+                return '0' + num
+            }
+            return num
+        }
+        time = time.getHours() + ':' + zeroPadding(time.getMinutes()) + ':' + zeroPadding(time.getSeconds());
+        return time
+    }
     if(!localStorage.getItem('apikey')) {
         $('.apikey').show()
     }
@@ -7,12 +19,15 @@ $(function () {
         if($('.apikeyInput').val()) {
             localStorage.setItem('apikey', $('.apikeyInput').val())
             $('.apikey').hide(300)
+            $('.cover').hide()
+            $('body').css('overflow', 'visible')
         }
     })
+    // 得到回复信息
     function getData() {
         var text = $('.text').val();
         if(text === '') return;
-        $('.dialogBox').append('<p class="right"><img src="./images/logo.png" alt="logo"></p><p class="rightContent"><span>' + text +'</span></p>')
+        $('.dialogBox').append('<p class="right"><span class="time">' + nowTime() + '</span><img src="./images/logo.png" alt="logo"></p><p class="rightContent"><span class="rightText">' + text +'</span></p><p class="left"><img src="./images/chatGPT.png" alt="chatGPT-log"><span class="time"></span></p><p class="leftContent"><span class="leftText">chatGPT正在思考中...</span></p>')
         $('.text').val('')
         $('.dialogBox').scrollTop($('.dialogBox').prop('scrollHeight'))
         var Authorization = 'Bearer ' + localStorage.getItem('apikey'),
@@ -35,16 +50,19 @@ $(function () {
             },
             data : data,
             success : function (res) {
-                $('.dialogBox').append('<p class="left"><img src="./images/chatGPT.png" alt="chatGPT-log"></p><p class="leftContent"><span>' + res.choices[0].text + '</span></p>')
+                $('.dialogBox .leftContent:last-child .leftText').html(res.choices[0].text)
+                $('.dialogBox .left:nth-last-child(2) .time').html(nowTime())
                 $('.dialogBox').scrollTop($('.dialogBox').prop('scrollHeight'))
             },
             error : function (err) {
                 err = JSON.parse(err.responseText)
-                $('.dialogBox').append('<p class="left"><img src="./images/chatGPT.png" alt="chatGPT-log"></p><p class="leftContent"><span>' + err.error.message + '</span></p>')
+                $('.dialogBox .leftContent:last-child .leftText').html(err.error.message)
+                $('.dialogBox .left:nth-last-child(2) .time').html(nowTime())
                 $('.dialogBox').scrollTop($('.dialogBox').prop('scrollHeight'))
             }
         })
     }
+    // 长按效果
     function headerDown() {
         var count = 0;
         timer = setInterval(function () {
@@ -53,6 +71,8 @@ $(function () {
                 count = 0;
                 clearInterval(timer)
                 $('.apikey').fadeIn(300)
+                $('.cover').show()
+                $('body').css('overflow', 'hidden')
             }
         }, 1000)
         return timer

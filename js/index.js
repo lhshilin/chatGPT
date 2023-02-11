@@ -35,12 +35,12 @@ $(function () {
             },
             data : data,
             success : function (res) {
-                $('.dialogBox').append('<p class="left"><img src="./images/charGPT.png" alt="charGpt-log"></p><p class="leftContent"><span>' + res.choices[0].text + '</span></p>')
+                $('.dialogBox').append('<p class="left"><img src="./images/chatGPT.png" alt="chatGPT-log"></p><p class="leftContent"><span>' + res.choices[0].text + '</span></p>')
                 $('.dialogBox').scrollTop($('.dialogBox').prop('scrollHeight'))
             },
             error : function (err) {
                 err = JSON.parse(err.responseText)
-                $('.dialogBox').append('<p class="left"><img src="./images/charGPT.png" alt="charGpt-log"></p><p class="leftContent"><span>' + err.error.message + '</span></p>')
+                $('.dialogBox').append('<p class="left"><img src="./images/chatGPT.png" alt="chatGPT-log"></p><p class="leftContent"><span>' + err.error.message + '</span></p>')
                 $('.dialogBox').scrollTop($('.dialogBox').prop('scrollHeight'))
             }
         })

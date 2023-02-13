@@ -29,7 +29,7 @@ $(function () {
     function getData() {
         var text = $.trim($('.text').val());
         if(text === '') return;
-        $('.dialogBox').append('<p class="right"><span class="time">' + nowTime() + '</span><img src="./images/logo.png" alt="logo"></p><p class="rightContent"><textarea class="rightText" disabled>' + text +'</textarea></p><p class="left"><img src="./images/chatGPT.png" alt="chatGPT-log"><span class="time"></span></p><p class="leftContent"><textarea class="leftText" disabled>chatGPT正在思考中...</textarea></p>')
+        $('.dialogBox').append('<p class="right"><span class="time">' + nowTime() + '</span><img src="./images/oneSelf.jpg" alt="logo"></p><p class="rightContent"><textarea class="rightText" disabled>' + text +'</textarea></p><p class="left"><img src="./images/chatGPT.png" alt="chatGPT-log"><span class="time"></span></p><p class="leftContent"><textarea class="leftText" disabled>chatGPT正在思考中...</textarea></p>')
         $('.text').val('')
         $('.dialogBox .rightText:last').css('height', $('.dialogBox .rightText:last').prop('scrollHeight'))
         $('.dialogBox').scrollTop($('.dialogBox').prop('scrollHeight'))

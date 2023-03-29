@@ -43,7 +43,7 @@ $(function () {
         var apikeyInput = $('.apikeyInput').val();
         apikey = apikeyInput;
         localStorage.setItem('apikey', apikeyInput)
-        $('.apikey').hide(300)
+        $('.apikey').hide(500)
         $('.cover').hide()
         $('body').css('overflow', 'visible')
         $('.text').focus()

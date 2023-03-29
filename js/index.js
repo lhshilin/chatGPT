@@ -32,7 +32,7 @@ $(function () {
         return time
     }
     if(!apikey) {
-        $('.apikey').show(500)
+        $('.apikey').show(300)
         $('.cover').show()
         $('body').css('overflow', 'hidden')
         $('.apikeyInput').focus()

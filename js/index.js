@@ -1,10 +1,15 @@
 $(function () {
     var key = true,
         apikey = localStorage.getItem('apikey'),
-        chatRecords = JSON.parse(localStorage.getItem('chatGPTChatRecords'));
+        chatRecords = JSON.parse(localStorage.getItem('chatGPTChatRecords')),
+        text = localStorage.getItem('chatGPTText');
     $('.dialogBox').css('height', ($(window).height()) * 0.8);
     $('.dialogBox .left:first-child .time').html(nowTime());
     $('.dialogBox .leftText:first-child').css('height', $('.dialogBox .leftText:first-child').prop('scrollHeight'))
+    text ? $('input:eq(0)').val(text) : null;
+    $('input:eq(0)').focus().on('input', function () {
+        localStorage.setItem('chatGPTText', $(this).val())
+    });
     if(chatRecords && chatRecords !== []) {
         $.each(chatRecords, function (i, e) {
             if(e.spokesman == 'left') {
@@ -43,7 +48,7 @@ $(function () {
         var apikeyInput = $('.apikeyInput').val();
         apikey = apikeyInput;
         localStorage.setItem('apikey', apikeyInput)
-        $('.apikey').hide(500)
+        $('.apikey').hide(300)
         $('.cover').hide()
         $('body').css('overflow', 'visible')
         $('.text').focus()
@@ -157,6 +162,8 @@ $(function () {
         chatRecords = [];
         localStorage.setItem('chatGPTChatRecords', "[]");
         $('.dialogBox').html('')
+        $('input:eq(0)').val('')
+        localStorage.setItem('chatGPT-text', '')
     })
     $('.send').on('click', getData)
     $('.text').on('keydown', function (e) {

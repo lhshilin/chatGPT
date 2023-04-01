@@ -88,6 +88,7 @@ $(function () {
             text : text
         });
         localStorage.setItem('chatGPTChatRecords', JSON.stringify(chatRecords));
+        localStorage.setItem('chatGPTText', '');
         $('.dialogBox').append('<p class="right"><span class="time">' + time + '</span><img src="./images/oneSelf.jpg" alt="logo"></p><p class="rightContent"><textarea class="rightText" disabled>' + text +'</textarea></p><p class="left"><img src="./images/chatGPT.png" alt="chatGPT-log"><span class="time"></span></p><p class="leftContent"><textarea class="leftText" disabled>chatGPT正在思考中...</textarea></p>')
         $('.text').val('')
         $('.dialogBox .rightText:last').css('height', $('.dialogBox .rightText:last').prop('scrollHeight'))
@@ -163,7 +164,7 @@ $(function () {
         localStorage.setItem('chatGPTChatRecords', "[]");
         $('.dialogBox').html('')
         $('input:eq(0)').val('')
-        localStorage.setItem('chatGPT-text', '')
+        localStorage.setItem('chatGPTText', '')
     })
     $('.send').on('click', getData)
     $('.text').on('keydown', function (e) {
